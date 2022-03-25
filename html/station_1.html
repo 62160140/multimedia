@@ -10,8 +10,71 @@
   <!-- ------------------- script game ------------------- -->
   <script type="text/javascript">
     var game;
-    var backgroud;
+    var background;
     var car_self;
+    var ROAD_SPEED = 10;
+
+    function Road() {
+      //background
+      tRoad = new Sprite(game, "../img/bg.jpg", 800, 1440);
+      tRoad.setSpeed(0, 0);
+      //ตึง background ไว้
+      tRoad.setDX(0);
+      tRoad.setDY(ROAD_SPEED)
+      tRoad.setPosition(400, 300);
+
+      tRoad.checkBounds = function () {
+        if (this.y > 720) {
+          this.setPosition(400, -120)
+        } // end if
+      }
+
+      tRoad.checkKeys = function () {
+        //used for testing ocean position
+        if (keysDown[K_UP]) {
+          this.changeYby(-1);
+        }
+        if (keysDown[K_DOWN]) {
+          this.changeYby(1);
+        }
+        console.log("Road Y value: " + this.y);
+      } // end checkKeys
+
+      return tRoad;
+    }
+
+    function CarSelf() {
+      tCar = new Sprite(game, "../img/car-self.png", 75, 120);
+      tCar.setSpeed(0);
+      tCar.maxSpeed = 10;
+      tCar.minSpeed = -3;
+
+      tCar.checkKeys = function () {
+        if (keysDown[K_UP] && tCar.speed <= 10) { //maxSpeed
+          this.setSpeed(ROAD_SPEED);
+          this.setMoveAngle(0);
+        }
+        else if (keysDown[K_DOWN] && tCar.speed >= -3) {
+          this.setSpeed(ROAD_SPEED);
+          this.setMoveAngle(180);
+        }
+        else if (keysDown[K_LEFT]) {
+          this.setSpeed(ROAD_SPEED);
+          this.setMoveAngle(270);
+        }
+        else if (keysDown[K_RIGHT]) {
+          this.setSpeed(ROAD_SPEED);
+          this.setMoveAngle(90);
+        } else {
+          this.setSpeed(0);
+        }
+
+
+        // tCar.setSpeed(this.speed);
+      }
+
+      return tCar;
+    }
 
     // init function
     function init() {
@@ -19,27 +82,23 @@
       game = new Scene();
 
       //background
-      backgroud = new Sprite(game, "../img/bg.jpg", 800, 600);
-      backgroud.setSpeed(0, 0);
-        //ตึง background ไว้
-        backgroud.setPosition(400, 300);
+      background = new Road();
 
       //car_self
-      car_self = new Sprite(game, "../img/car-self.png", 75, 120);
-      car_self.setPosition(440, 380);
-      car_self.setSpeed(0);
+      car_self = new CarSelf();
 
 
-
-      game.start()
+      game.start();
     } //end init 
 
 
     //update function
     function update() {
+      game.clear();
 
+      car_self.checkKeys();
 
-      backgroud.update();
+      background.update();
       car_self.update();
     }//end update
 
