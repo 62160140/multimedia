@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Station 1</title>
+  <script type="text/javascript" src="../simpleGame.js"></script>
+  <!-- ------------------- script game ------------------- -->
+  <script type="text/javascript">
+    var game;
+    var backgroud;
+    var car_self;
+
+    // init function
+    function init() {
+      //game 
+      game = new Scene();
+
+      //background
+      backgroud = new Sprite(game, "../img/bg.jpg", 800, 600);
+      backgroud.setSpeed(0, 0);
+        //ตึง background ไว้
+        backgroud.setPosition(400, 300);
+
+      //car_self
+      car_self = new Sprite(game, "../img/car-self.png", 75, 120);
+      car_self.setPosition(440, 380);
+      car_self.setSpeed(0);
+
+
+
+      game.start()
+    } //end init 
+
+
+    //update function
+    function update() {
+
+
+      backgroud.update();
+      car_self.update();
+    }//end update
+
+  </script>
+</head>
+
+
+<body onload="init()">
+
+</body>
+
+</html>
