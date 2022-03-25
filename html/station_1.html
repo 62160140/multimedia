@@ -12,7 +12,7 @@
     var game;
     var background;
     var car_self;
-    var ROAD_SPEED = 10;
+    var ROAD_SPEED = 15;
 
     function Road() {
       //background
@@ -22,6 +22,8 @@
       tRoad.setDX(0);
       tRoad.setDY(ROAD_SPEED)
       tRoad.setPosition(400, 300);
+      tRoad.maxSpeed = 18;
+      tRoad.minSpeed = 15;
 
       tRoad.checkBounds = function () {
         if (this.y > 720) {
@@ -31,13 +33,14 @@
 
       tRoad.checkKeys = function () {
         //used for testing ocean position
-        if (keysDown[K_UP]) {
-          this.changeYby(-1);
+        if (keysDown[K_UP] && ROAD_SPEED <= tRoad.maxSpeed) {
+          ROAD_SPEED += .5;
+          tRoad.setDY(ROAD_SPEED)
         }
-        if (keysDown[K_DOWN]) {
-          this.changeYby(1);
+        if (keysDown[K_DOWN] && ROAD_SPEED >= tRoad.minSpeed) {
+          ROAD_SPEED -= .5;
+          tRoad.setDY(ROAD_SPEED)
         }
-        console.log("Road Y value: " + this.y);
       } // end checkKeys
 
       return tRoad;
@@ -45,18 +48,18 @@
 
     function CarSelf() {
       tCar = new Sprite(game, "../img/car-self.png", 75, 120);
+      tCar.setPosition(350, 530);
+
       tCar.setSpeed(0);
       tCar.maxSpeed = 10;
       tCar.minSpeed = -3;
 
       tCar.checkKeys = function () {
-        if (keysDown[K_UP] && tCar.speed <= 10) { //maxSpeed
-          this.setSpeed(ROAD_SPEED);
-          this.setMoveAngle(0);
+        if (keysDown[K_UP]) {
+
         }
-        else if (keysDown[K_DOWN] && tCar.speed >= -3) {
-          this.setSpeed(ROAD_SPEED);
-          this.setMoveAngle(180);
+        else if (keysDown[K_DOWN]) {
+
         }
         else if (keysDown[K_LEFT]) {
           this.setSpeed(ROAD_SPEED);
@@ -69,8 +72,17 @@
           this.setSpeed(0);
         }
 
-
+        // console.log('=', this.x, this.y)
         // tCar.setSpeed(this.speed);
+      }
+
+      tCar.checkGravity = function () {
+        if (this.x > 750) {
+          this.setPosition(750, this.y);
+        } else if (this.x < 45) {
+          this.setPosition(45, this.y);
+
+        }
       }
 
       return tCar;
@@ -97,6 +109,8 @@
       game.clear();
 
       car_self.checkKeys();
+      car_self.checkGravity();
+      background.checkKeys();
 
       background.update();
       car_self.update();
