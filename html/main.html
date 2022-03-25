@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>template for simple games</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="simpleGame.js"></script>
+    <script type="text/javascript"></script>
+    <script type="text/javascript" src="http://www.goragod.com/ajax/gajax.js"></script>
+</head>
+
+<style>
+    body {
+        background-image: url('../img/background.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 50% 50%;
+    }
+
+    .buttonPosition {
+        width: 200px;
+        height: 50px;
+        margin-top: 20px;
+        margin-left: 55px;
+    }
+
+    .selectCar {
+        width: 80px;
+        margin-left: 45px;
+        margin-right: 45px;
+    }
+
+    .positionSelectCar {
+        margin-top: 165px;
+        margin-left: 335px;
+    }
+
+    .styleDirections {
+        font-size: 55px;
+        color: black;
+    }
+
+    .nameCar {
+        margin-top: 10px;
+        margin-left: 106px;
+        font-weight: bold;
+    }
+</style>
+</head>
+
+<body>
+    <div class="positionSelectCar">
+        <button id="previousbtn" onclick="previousImage()" class="btn-outline-dark"><i
+                class="fa styleDirections">&#xf137;</i></button>
+        <!--ลูกศร Previous -->
+        <img src="../img/car.png" class="selectCar" id="mainImage"> <!-- แสดงภาพรถ -->
+        <button id="nextbtn" onclick="nextImage()" class="btn-outline-dark"><i
+                class="fa styleDirections">&#xf138;</i></button>
+        <!--ลูกศร Next -->
+        <div>
+            <div id="namecar" class="nameCar">DANGER CAR</div> <!-- แสดงชื่อรถ -->
+            <button class="btn-outline-dark buttonPosition" id="play">PLAY</button> <!-- ปุ่ม Play -->
+        </div>
+    </div>
+
+</body>
+
+<script>
+    var imgArray = new Array();
+
+    imgArray[0] = new Image();
+    imgArray[0].src = '../img/car.png';
+
+
+    imgArray[1] = new Image();
+    imgArray[1].src = '../img/carorange.png';
+
+
+    imgArray[2] = new Image();
+    imgArray[2].src = '../img/carpink.png';
+
+    imgArray[3] = new Image();
+    imgArray[3].src = '../img/carpolice.png';
+
+    var car = new Array();
+    car[0] = 'DANGER CAR';
+    car[1] = 'ORANGE CAR';
+    car[2] = 'PINKKY CAR';
+    car[3] = 'POLICE CAR';
+
+
+    function nextImage() {
+        var img = document.getElementById("mainImage");
+        for (var i = 0; i < imgArray.length; i++) {
+            if (imgArray[i].src == img.src) {
+                if (i === imgArray.length - 1) {
+                    document.getElementById("mainImage").src = imgArray[0].src;
+                    break;
+                }
+                document.getElementById("mainImage").src = imgArray[i + 1].src;
+                break;
+            }
+        }
+        for (var i = 0; i < imgArray.length; i++) {
+            if (imgArray[i].src == img.src) {
+                document.getElementById('namecar').innerHTML = car[i];
+                break;
+            }
+        }
+    }
+    function previousImage() {
+        var img = document.getElementById("mainImage");
+        for (var i = imgArray.length - 1; i >= 0; i--) {
+            if (imgArray[i].src == img.src) {
+                if (i === 0) {
+                    document.getElementById("mainImage").src = imgArray[3].src;
+                    break;
+                }
+                document.getElementById("mainImage").src = imgArray[i - 1].src;
+                break;
+            }
+        }
+        for (var i = imgArray.length - 1; i >= 0; i--) {
+            if (imgArray[i].src == img.src) {
+                document.getElementById('namecar').innerHTML = car[i];
+                break;
+            }
+        }
+    }
+</script>
+
+</html>
