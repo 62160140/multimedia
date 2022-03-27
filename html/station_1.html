@@ -13,7 +13,10 @@
     var background;
     var car_self;
     var ROAD_SPEED = 15;
+    var cars_Obstacle;
 
+
+    //ถนน
     function Road() {
       //background
       tRoad = new Sprite(game, "../img/bg.jpg", 800, 1440);
@@ -46,6 +49,7 @@
       return tRoad;
     }
 
+    //รถเราเอง
     function CarSelf() {
       tCar = new Sprite(game, "../img/car-self.png", 75, 120);
       tCar.setPosition(350, 530);
@@ -88,6 +92,37 @@
       return tCar;
     }
 
+    //รถอุปสรรค
+    function Car_ofstacle() {
+      tCar = new Sprite(game, "../img/car-obstacle1.png", 75, 120)
+
+      // สร้างใหม่
+      tCar.reset = function () {
+        //setDX setDY ทำให้ Object Move มาจากด้านบน
+        // ความเร็วเท่ากับ
+        this.setDY(ROAD_SPEED);
+        this.setDX(0);
+
+        // newX = เซฟใส่ตรงนี้ 
+
+        /* ตัวอย่าง */
+        newX = Math.random() * game.width;
+        this.setPosition(newX, 50);
+      }
+
+      //ตกแมพ
+      tCar.checkBounds = function () {
+        if (this.y > game.height) {
+          this.reset();
+        }
+      }
+
+      // เมือ่เกิด object เกิด ทำให้มีตำแหน่ง
+      tCar.reset();
+
+      return tCar;
+    }
+
     // init function
     function init() {
       //game 
@@ -99,6 +134,9 @@
       //car_self
       car_self = new CarSelf();
 
+      //cars_obstacle
+      //! ทำให้มีหลายคันด้วย : สตางค์
+      cars_Obstacle = new Car_ofstacle();
 
       game.start();
     } //end init 
@@ -108,12 +146,16 @@
     function update() {
       game.clear();
 
+      //handle
       car_self.checkKeys();
       car_self.checkGravity();
       background.checkKeys();
 
+
+      //update
       background.update();
       car_self.update();
+      cars_Obstacle.update();
     }//end update
 
   </script>
