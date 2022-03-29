@@ -123,7 +123,7 @@
       tCar.reset = function () {
         //setDX setDY ทำให้ Object Move มาจากด้านบน
         // ความเร็วเท่ากับ
-        this.setDY((Math.random() * ROAD_SPEED) + 5);
+        this.setDY(ROAD_SPEED);
         this.setDX(0);
         // newX = เซฟใส่ตรงนี้ 
 
@@ -151,7 +151,7 @@
       tCar.reset = function () {
         //setDX setDY ทำให้ Object Move มาจากด้านบน
         // ความเร็วเท่ากับ
-        this.setDY(ROAD_SPEED + 1);
+        this.setDY(ROAD_SPEED +2);
         this.setDX(0);
         // newX = เซฟใส่ตรงนี้ 
 
@@ -181,7 +181,7 @@
 
 
 
-      if (distance >= 30) {
+      if (distance >= 100) {
         endGame();
         // window.location.href="./mainLevel.html"
 
