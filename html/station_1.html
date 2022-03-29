@@ -178,9 +178,6 @@
       //1วิได้ระยทาง 10 เมตร 
       /* ต้องมีเรื่องความเร็วถ้าเร่งความเร็วระยะทางต้องมากขึ้นด้วย */
       distance = parseInt(time * 10);
-
-
-
       if (distance >= 30) {
         endGame();
         // window.location.href="./mainLevel.html"
@@ -247,6 +244,7 @@
       car_self.checkGravity();
       background.checkKeys();
       checkDistance();
+      checkCollisions();
 
 
       //update
@@ -256,6 +254,20 @@
       car_obstacle2.update();
     }//end update
 
+
+    function checkCollisions() {
+
+      if (cars_Obstacle.collidesWith(car_self)) {
+        cars_Obstacle.reset();
+        endGame();
+      }
+      if (car_obstacle2.collidesWith(car_self)) {
+        cars_Obstacle2.reset();
+        endGame();
+      }
+
+
+    }
 
   </script>
 </head>
