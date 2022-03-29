@@ -115,34 +115,59 @@
     }
 
     //รถอุปสรรค
-    function Car_ofstacle() {
+    function Car_obstacle() {
       const arrPosition = [45, 144, 243, 349.5, 448.5, 556.5, 655.5, 750];
+      const arr = [0, 2, 4, 6]
       tCar = new Sprite(game, "../img/car_obstacle_red.png", 75, 120)
-
       // สร้างใหม่
       tCar.reset = function () {
         //setDX setDY ทำให้ Object Move มาจากด้านบน
         // ความเร็วเท่ากับ
         this.setDY(ROAD_SPEED);
         this.setDX(0);
-
         // newX = เซฟใส่ตรงนี้ 
 
+        number = Math.floor(Math.random() * 4);
+        newX = arr[number]
+
         /* ตัวอย่าง */
-        newX = Math.floor(Math.random()*8) ;
         this.setPosition(arrPosition[newX], 50);
       }
-
       //ตกแมพ
       tCar.checkBounds = function () {
         if (this.y > game.height) {
           this.reset();
         }
       }
-
       // เมือ่เกิด object เกิด ทำให้มีตำแหน่ง
       tCar.reset();
+      return tCar;
+    }
+    function Car_obstacle2() {
+      const arrPosition = [45, 144, 243, 349.5, 448.5, 556.5, 655.5, 750];
+      const arr = [1, 3, 5, 7]
+      tCar = new Sprite(game, "../img/car_obstacle_pink.png", 75, 120)
+      // สร้างใหม่
+      tCar.reset = function () {
+        //setDX setDY ทำให้ Object Move มาจากด้านบน
+        // ความเร็วเท่ากับ
+        this.setDY(ROAD_SPEED + 1);
+        this.setDX(0);
+        // newX = เซฟใส่ตรงนี้ 
 
+        number = Math.floor(Math.random() * 4);
+        newX = arr[number]
+        /* ตัวอย่าง */
+        this.setPosition(arrPosition[newX], 50);
+      }
+      //ตกแมพ
+      tCar.checkBounds = function () {
+        if (this.y > game.height) {
+          this.reset();
+        }
+      }
+      // เมือ่เกิด object เกิด ทำให้มีตำแหน่ง
+      tCar.reset();
       return tCar;
     }
 
@@ -158,7 +183,7 @@
 
       if (distance >= 100) {
         // endGame();
-        window.location.href="./mainLevel.html"
+        window.location.href = "./mainLevel.html"
         return;
       }
 
@@ -200,7 +225,8 @@
 
       //cars_obstacle
       //! ทำให้มีหลายคันด้วย : สตางค์
-      cars_Obstacle = new Car_ofstacle();
+      cars_Obstacle = new Car_obstacle();
+      car_obstacle2 = new Car_obstacle2();
 
       //time
       timer = new Timer();  // ตัวเวลาปัจจุบัน
@@ -229,6 +255,7 @@
       background.update();
       car_self.update();
       cars_Obstacle.update();
+      car_obstacle2.update();
     }//end update
 
 
@@ -265,8 +292,6 @@
 
 
 <style>
-
-
   #confirm {
     display: none;
     background-color: #91FF00;
