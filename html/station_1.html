@@ -123,7 +123,7 @@
       tCar.reset = function () {
         //setDX setDY ทำให้ Object Move มาจากด้านบน
         // ความเร็วเท่ากับ
-        this.setDY(ROAD_SPEED);
+        this.setDY(ROAD_SPEED+1);
         this.setDX(0);
         // newX = เซฟใส่ตรงนี้ 
 
@@ -151,7 +151,7 @@
       tCar.reset = function () {
         //setDX setDY ทำให้ Object Move มาจากด้านบน
         // ความเร็วเท่ากับ
-        this.setDY(ROAD_SPEED +2);
+        this.setDY(ROAD_SPEED + 2.5);
         this.setDX(0);
         // newX = เซฟใส่ตรงนี้ 
 
@@ -178,10 +178,7 @@
       //1วิได้ระยทาง 10 เมตร 
       /* ต้องมีเรื่องความเร็วถ้าเร่งความเร็วระยะทางต้องมากขึ้นด้วย */
       distance = parseInt(time * 10);
-
-
-
-      if (distance >= 100) {
+      if (distance >= 150) {
         endGame();
         // window.location.href="./mainLevel.html"
 
@@ -247,6 +244,7 @@
       car_self.checkGravity();
       background.checkKeys();
       checkDistance();
+      checkCollisions();
 
 
       //update
@@ -257,6 +255,20 @@
     }//end update
 
 
+    function checkCollisions() {
+
+      if (cars_Obstacle.collidesWith(car_self)) {
+        // cars_Obstacle.reset();
+        endGame();
+      }
+      if (car_obstacle2.collidesWith(car_self)) {
+        // cars_Obstacle2.reset();
+        endGame();
+      }
+
+
+    }
+
   </script>
 </head>
 
@@ -265,7 +277,7 @@
 
   <div id="scoreBoard"></div>
 
-  <div style="">
+  <div>
     <div id="confirm">
       <div class="message"></div>
       <button class="yes">NEXT LEVEL</button>
@@ -273,7 +285,9 @@
     </div>
     <button id="btn-Endgame" onclick='functionConfirm("YOU WIN!!!", function yes()
       {
-         alert("Yes")
+
+                 window.location.href="./mainLevel.html"
+
       }, function no()
       {
          alert("no")
