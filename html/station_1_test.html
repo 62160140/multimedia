@@ -8,35 +8,16 @@
   <title>Station 1</title>
   <script type="text/javascript" src="../simpleGame.js"></script>
   <!-- ------------------- script game ------------------- -->
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-  </script>
-
-  <script>
-    function functionConfirm(msg, myYes, myNo) {
-      var confirmBox = $("#confirm");
-      confirmBox.find(".message").text(msg);
-      confirmBox.find(".yes,.no").unbind().click(function () {
-        confirmBox.hide();
-      });
-      confirmBox.find(".yes").click(myYes);
-      confirmBox.find(".no").click(myNo);
-      confirmBox.show();
-    }
-  </script>
-
   <script type="text/javascript">
     var game;
     var background;
     var car_self;
     var ROAD_SPEED = 15;
     var cars_Obstacle;
-    var time;
-    var timer;//ตัวจับเวลา
-    var distance; //ระยะทาง
-    var endDistance = 1000;
-    var btnEndGame;
-    var bgImg;
+    var NUM_MAKECAR = 5;
+    var makecar;
+    var makecar2;
+
 
     //ถนน
     function Road() {
@@ -116,27 +97,33 @@
 
     //รถอุปสรรค
     function Car_ofstacle() {
+      const arrPosition = [45, 144, 243, 349.5, 448.5, 556.5, 655.5, 750];
       tCar = new Sprite(game, "../img/car_obstacle_red.png", 75, 120)
+
 
       // สร้างใหม่
       tCar.reset = function () {
         //setDX setDY ทำให้ Object Move มาจากด้านบน
         // ความเร็วเท่ากับ
-        this.setDY((Math.random() * ROAD_SPEED) + 5);
+        this.setDY((Math.random()*ROAD_SPEED)+5);
         this.setDX(0);
 
         // newX = เซฟใส่ตรงนี้ 
 
         /* ตัวอย่าง */
-        newX = Math.random() * game.width;
-        this.setPosition(newX, 50);
-      }
+        newX = Math.floor(Math.random() * 8);
 
+
+        arrPosition
+        this.setPosition(arrPosition[newX], 50);
+      }
       //ตกแมพ
       tCar.checkBounds = function () {
+
         if (this.y > game.height) {
           this.reset();
         }
+
       }
 
       // เมือ่เกิด object เกิด ทำให้มีตำแหน่ง
@@ -145,69 +132,32 @@
       return tCar;
     }
 
-    //checkDistance()
-    function checkDistance() {
-      time = timer.getElapsedTime(); //ดึงเวลาปัจจุบันเก็บเข้าตัวแปร time
+    function makeCars_ofstacle() {
+      makecar = new Array(NUM_MAKECAR);
+      makecar2 = new Array(NUM_MAKECAR);
 
-      //1วิได้ระยทาง 10 เมตร 
-      /* ต้องมีเรื่องความเร็วถ้าเร่งความเร็วระยะทางต้องมากขึ้นด้วย */
-      distance = parseInt(time * 10);
+      for (i = 0; i < makecar.length; i++) {
+        makecar[i] = new Car_ofstacle();
+        makecar2[i] = new Car_ofstacle();
+      } // end for
+    } // end makeCar
 
 
-
-      if (distance >= 30) {
-        endGame();
-        // window.location.href="./mainLevel.html"
-        return;
-      }
-
-      updateDistance();
-    }
-
-    //updateDistance()
-    function updateDistance() {
-      document.getElementById("scoreBoard").innerHTML = "เป้าหมาย:" + endDistance + " ระยะทางตอนนี้: " + distance;
-
-    }
-
-    // end game 
-    function endGame() {
-      game.clear();
-      game.stop(); //หยุดเล่น
-      game.hide();
-      bgImg.style.display = "block";
-      btnEndGame.click();
-
-      // alert(`Your score: ${score}\nYour time: ${time}`);
-
-      // if (confirm("Do you want play more?")) restart();
-    }
 
     // init function
     function init() {
-      btnEndGame = document.getElementById("btn-Endgame");
-      bgImg = document.getElementById("imgBg");
       //game 
       game = new Scene();
 
       //background
       background = new Road();
-      bgImg.style.display = "none";
 
       //car_self
       car_self = new CarSelf();
-
       //cars_obstacle
       //! ทำให้มีหลายคันด้วย : สตางค์
-      cars_Obstacle = new Car_ofstacle();
-
-      //time
-      timer = new Timer();  // ตัวเวลาปัจจุบัน
-
-      //ซ่อนปุ่ม submit
-      document.getElementById("btn-Endgame").style.display = "none";
-      ;
-
+      makeCars_ofstacle();
+      // cars_Obstacle = new Car_ofstacle();
 
       game.start();
     } //end init 
@@ -221,15 +171,29 @@
       car_self.checkKeys();
       car_self.checkGravity();
       background.checkKeys();
-      checkDistance();
+      for (var i = 0; i < makecar.length; i++) {
+        makecar[i].checkBounds();
+      }
+
 
 
       //update
       background.update();
       car_self.update();
-      cars_Obstacle.update();
-    }//end update
+      // cars_Obstacle.update();
 
+
+
+      for (var i = 0; i < makecar.length; i++) {
+        makecar[i].update();
+        // if (makecar[i].y > game.height / 1.1) {
+        //   for (var i = 0; i < makecar2.length; i++) {
+        //     makecar2[i].update();
+        //   }
+        //   break;
+        // }
+      }
+    }//end update
 
   </script>
 </head>
@@ -237,62 +201,6 @@
 
 <body onload="init()">
 
-  <div id="scoreBoard"></div>
-
-  <div style="">
-    <div id="confirm">
-      <div class="message"></div>
-      <button class="yes">NEXT LEVEL</button>
-      <button class="no">MENU</button>
-    </div>
-    <button id="btn-Endgame" onclick='functionConfirm("YOU WIN!!!", function yes()
-      {
-         alert("Yes")
-      }, function no()
-      {
-         alert("no")
-      });'></button>
-  </div>
-
-  <img src="../img/bg.jpg" id="imgBg" width="800px" height="600px" style="margin-left:10px; margin-top:11px">
-
-
-
-
 </body>
-
-
-
-<style>
-
-
-  #confirm {
-    display: none;
-    background-color: #91FF00;
-    border: 1px solid #aaa;
-    position: fixed;
-    width: 250px;
-    left: 50%;
-    margin-left: -100px;
-    padding: 6px 8px 8px;
-    box-sizing: border-box;
-    text-align: center;
-  }
-
-  #confirm button {
-    background-color: #48E5DA;
-    display: inline-block;
-    border-radius: 5px;
-    border: 1px solid #aaa;
-    padding: 5px;
-    text-align: center;
-    width: 100px;
-    cursor: pointer;
-  }
-
-  #confirm .message {
-    text-align: left;
-  }
-</style>
 
 </html>
