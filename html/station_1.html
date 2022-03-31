@@ -37,6 +37,7 @@
     var endDistance = 1000;
     var btnEndGame;
     var bgImg;
+    var imgCar;
 
     //ถนน
     function Road() {
@@ -73,7 +74,19 @@
 
     //รถเราเอง
     function CarSelf() {
-      tCar = new Sprite(game, "../img/car-self.png", 75, 120);
+      if (localStorage.getItem('carNumber') == 0) {
+        imgCar = "../img/car.png";
+      }
+      else if (localStorage.getItem('carNumber') == 1) {
+        imgCar = "../img/carorange.png";
+      }
+      else if (localStorage.getItem('carNumber') == 2) {
+        imgCar = "../img/carpink.png";
+      }
+      else if (localStorage.getItem('carNumber') == 3) {
+        imgCar = "../img/carpolice.png";
+      }
+      tCar = new Sprite(game, imgCar, 75, 120);
       tCar.setPosition(350, 530);
 
       tCar.setSpeed(0);
@@ -123,7 +136,7 @@
       tCar.reset = function () {
         //setDX setDY ทำให้ Object Move มาจากด้านบน
         // ความเร็วเท่ากับ
-        this.setDY(ROAD_SPEED+1);
+        this.setDY(ROAD_SPEED + 1);
         this.setDX(0);
         // newX = เซฟใส่ตรงนี้ 
 
