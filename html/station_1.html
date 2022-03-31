@@ -113,7 +113,7 @@
       tCar.reset = function () {
         //setDX setDY ทำให้ Object Move มาจากด้านบน
         // ความเร็วเท่ากับ
-        this.setDY((Math.random() * ROAD_SPEED) + 5);
+        this.setDY(ROAD_SPEED+1);
         this.setDX(0);
         // newX = เซฟใส่ตรงนี้ 
 
@@ -141,7 +141,7 @@
       tCar.reset = function () {
         //setDX setDY ทำให้ Object Move มาจากด้านบน
         // ความเร็วเท่ากับ
-        this.setDY(ROAD_SPEED + 1);
+        this.setDY(ROAD_SPEED + 2.5);
         this.setDX(0);
         // newX = เซฟใส่ตรงนี้ 
 
@@ -168,8 +168,13 @@
       //1วิได้ระยทาง 10 เมตร 
       /* ต้องมีเรื่องความเร็วถ้าเร่งความเร็วระยะทางต้องมากขึ้นด้วย */
       distance = parseInt(time * 10);
+<<<<<<< HEAD
       if (distance >= 30) {
         winGame();
+=======
+      if (distance >= 150) {
+        endGame();
+>>>>>>> dbb7dff9f3220c53f86a839810ac052d24ceb5ea
         // window.location.href="./mainLevel.html"
       }
       updateDistance();
