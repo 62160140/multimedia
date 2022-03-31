@@ -52,23 +52,44 @@
 </head>
 
 <body>
+    <b id="result"></b>
     <div class="positionSelectCar">
-        <button id="previousbtn" onclick="previousImage()" class="btn-outline-dark"><i
+        <button id="previousbtn" onclick="previousImage(), carNumberPrevious()" class="btn-outline-dark"><i
                 class="fa styleDirections">&#xf137;</i></button>
         <!--ลูกศร Previous -->
         <img src="../img/car.png" class="selectCar" id="mainImage"> <!-- แสดงภาพรถ -->
-        <button id="nextbtn" onclick="nextImage()" class="btn-outline-dark"><i
+        <button id="nextbtn" onclick="nextImage() ,carNumberNext()" class="btn-outline-dark"><i
                 class="fa styleDirections">&#xf138;</i></button>
         <!--ลูกศร Next -->
         <div>
             <div id="namecar" class="nameCar">DANGER CAR</div> <!-- แสดงชื่อรถ -->
-            <button class="btn-outline-dark buttonPosition" id="play" onclick="document.location='mainLevel.html'">PLAY</button> <!-- ปุ่ม Play -->
+            <button class="btn-outline-dark buttonPosition" id="play"
+                onclick="document.location='mainLevel.html'">PLAY</button> <!-- ปุ่ม Play -->
         </div>
     </div>
 
 </body>
 
 <script>
+    localStorage.carNumber = 0;
+    function carNumberNext() {
+        if (typeof (Storage) !== "undefined") {
+            if (localStorage.carNumber && (Number(localStorage.carNumber) <= 2)) {
+                localStorage.carNumber = Number(localStorage.carNumber) + 1;
+            } else {
+                localStorage.carNumber = 0;
+            }
+        } 
+    }
+    function carNumberPrevious() {
+        if (typeof (Storage) !== "undefined") {
+            if (localStorage.carNumber && (Number(localStorage.carNumber) <= 3 && (Number(localStorage.carNumber) >= 1))) {
+                localStorage.carNumber = Number(localStorage.carNumber) - 1;
+            } else if ((Number(localStorage.carNumber) == 0)) {
+                localStorage.carNumber = 3;
+            }
+        } 
+    }
     var imgArray = new Array();
 
     imgArray[0] = new Image();
