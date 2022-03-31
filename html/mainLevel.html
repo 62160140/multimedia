@@ -8,16 +8,38 @@
   <title>Document</title>
 </head>
 
-<body>
+<body onload="checkLevel()">
   <div>
     <button class="button" type="button" onclick="document.location='main.html'">Back</button>
   </div>
   <h1 class="positionLevel">LEVEL</h1>
   <div class="paddingButton">
-    <button class="button" type="button" onclick= "window.location.href='./station_1.html'">1</button>
-    <button class="button" type="button">2</button>
-    <button class="button" type="button">3</button>
+    <button class="button" type="button" onclick="window.location.href='./station_1.html'" id="level1">1</button>
+    <button class="button" type="button" onclick="window.location.href='./station_2.html'" id="level2">2</button>
+    <button class="button" type="button" onclick="window.location.href='./station_3.html'" id="level3">3</button>
   </div>
+
+  <script>
+    function checkLevel() {
+      document.getElementById("level1").style.display = "none"
+      document.getElementById("level2").style.display = "none"
+      document.getElementById("level3").style.display = "none"
+
+
+      console.log(localStorage.getItem("level1"))
+
+      if (localStorage.getItem("level1") == "true") {
+        document.getElementById("level1").style.display = "inline"
+      }
+      if (localStorage.getItem("level2") == "true") {
+        document.getElementById("level2").style.display = "inline"
+      }
+      if (localStorage.getItem("level3") == "true") {
+        document.getElementById("level3").style.display = "inline"
+      }
+    }
+
+  </script>
 </body>
 <style>
   body {

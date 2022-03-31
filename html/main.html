@@ -71,6 +71,16 @@
 </body>
 
 <script>
+
+    var level1 = true;
+    var level2 = false;
+    var level3 = false;
+    localStorage.level1 = level1;
+    localStorage.level2 = level2;
+    localStorage.level3 = level3;
+
+
+
     localStorage.carNumber = 0;
     function carNumberNext() {
         if (typeof (Storage) !== "undefined") {
@@ -79,8 +89,9 @@
             } else {
                 localStorage.carNumber = 0;
             }
-        } 
+        }
     }
+
     function carNumberPrevious() {
         if (typeof (Storage) !== "undefined") {
             if (localStorage.carNumber && (Number(localStorage.carNumber) <= 3 && (Number(localStorage.carNumber) >= 1))) {
@@ -88,7 +99,7 @@
             } else if ((Number(localStorage.carNumber) == 0)) {
                 localStorage.carNumber = 3;
             }
-        } 
+        }
     }
     var imgArray = new Array();
 

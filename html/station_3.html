@@ -181,7 +181,7 @@
       //1วิได้ระยทาง 10 เมตร 
       /* ต้องมีเรื่องความเร็วถ้าเร่งความเร็วระยะทางต้องมากขึ้นด้วย */
       distance = parseInt(time * 10);
-      if (distance >= 30) {
+      if (distance >= endDistance) {
         winGame();
         // window.location.href="./mainLevel.html"
       }
@@ -199,6 +199,8 @@
       game.clear();
       game.stop(); //หยุดเล่น
       game.hide();
+      localStorage.level3 = true;
+
       bgImg.style.display = "block";
       btnWinGame.click();
 
@@ -303,21 +305,21 @@
   </div>
 
   <button id="btn-winGame" onclick='functionConfirm("YOU WIN!!!", function yes()
-      {
+      {           
+
                  window.location.href="./mainLevel.html"
-      }, function no()
-      {
-         alert("no")
-      });'></button>
+      } );'></button>
 
   <button id="btn-lostGame" onclick='functionConfirm2("GAME OVER!!!", function yes()
        {
 
-                  // window.location.href="./mainLevel.html"
+                  window.location.href="./station_3.html"
  
        }, function no()
        {
-          // alert("no")
+        window.location.href="./mainLevel.html"
+
+   
        });'></button>
   </div>
 
@@ -326,15 +328,17 @@
 
 
   <script>
+
     function functionConfirm(msg, myYes, myNo) {
       var confirmBox = $("#confirm");
       confirmBox.find(".restarted").hide();
+      confirmBox.find(".next_level").hide();
       confirmBox.find(".message").text(msg);
       confirmBox.find(".next_level,.menu").unbind().click(function () {
         confirmBox.hide();
       });
       confirmBox.find(".next_level").click(myYes);
-      confirmBox.find(".menu").click(myNo);
+      confirmBox.find(".menu").click(myYes);
       confirmBox.show();
     }
 

@@ -181,7 +181,7 @@
       //1วิได้ระยทาง 10 เมตร 
       /* ต้องมีเรื่องความเร็วถ้าเร่งความเร็วระยะทางต้องมากขึ้นด้วย */
       distance = parseInt(time * 10);
-      if (distance >= 30) {
+      if (distance >= endDistance) {
         winGame();
         // window.location.href="./mainLevel.html"
       }
@@ -196,6 +196,8 @@
 
     // end game 
     function winGame() {
+      localStorage.level2 = true;
+
       game.clear();
       game.stop(); //หยุดเล่น
       game.hide();
@@ -304,20 +306,20 @@
 
   <button id="btn-winGame" onclick='functionConfirm("YOU WIN!!!", function yes()
       {
-                 window.location.href="./mainLevel.html"
+        window.location.href="./station_3.html"
       }, function no()
       {
-         alert("no")
+        window.location.href="./mainLevel.html"
       });'></button>
 
   <button id="btn-lostGame" onclick='functionConfirm2("GAME OVER!!!", function yes()
        {
 
-                  // window.location.href="./mainLevel.html"
+                  window.location.href="./station_2.html"
  
        }, function no()
        {
-          // alert("no")
+        window.location.href="./mainLevel.html"
        });'></button>
   </div>
 
