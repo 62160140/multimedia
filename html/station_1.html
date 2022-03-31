@@ -180,7 +180,7 @@
 
       //1วิได้ระยทาง 10 เมตร 
       /* ต้องมีเรื่องความเร็วถ้าเร่งความเร็วระยะทางต้องมากขึ้นด้วย */
-      distance = parseInt(time * 10);
+      distance = parseInt(time * 10*ROAD_SPEED);
       if (distance >= endDistance) {
         winGame();
         // window.location.href="./mainLevel.html"

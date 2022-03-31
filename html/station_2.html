@@ -207,7 +207,7 @@
 
       //1วิได้ระยทาง 10 เมตร 
       /* ต้องมีเรื่องความเร็วถ้าเร่งความเร็วระยะทางต้องมากขึ้นด้วย */
-      distance = parseInt(time * 10);
+      distance = parseInt(time * 10*ROAD_SPEED);
       if (distance >= endDistance) {
         winGame();
         // window.location.href="./mainLevel.html"
@@ -267,7 +267,7 @@
       //! ทำให้มีหลายคันด้วย : สตางค์
       cars_Obstacle = new Car_obstacle();
       car_obstacle2 = new Car_obstacle2();
-      Car_obstacle3 = new Car_obstacle3();
+      car_obstacle3 = new Car_obstacle3();
       //time
       timer = new Timer();  // ตัวเวลาปัจจุบัน
 
@@ -297,7 +297,7 @@
       car_self.update();
       cars_Obstacle.update();
       car_obstacle2.update();
-      Car_obstacle3.update();
+      car_obstacle3.update();
     }//end update
 
 
@@ -309,6 +309,10 @@
       }
       if (car_obstacle2.collidesWith(car_self)) {
         // cars_Obstacle2.reset();
+        lostGame();
+      }
+
+      if(car_obstacle3.collidesWith(car_self)){
         lostGame();
       }
 
