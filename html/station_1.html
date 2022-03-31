@@ -12,18 +12,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
   </script>
 
-  <script>
-    function functionConfirm(msg, myYes, myNo) {
-      var confirmBox = $("#confirm");
-      confirmBox.find(".message").text(msg);
-      confirmBox.find(".yes,.no").unbind().click(function () {
-        confirmBox.hide();
-      });
-      confirmBox.find(".yes").click(myYes);
-      confirmBox.find(".no").click(myNo);
-      confirmBox.show();
-    }
-  </script>
+
 
   <script type="text/javascript">
     var game;
@@ -35,7 +24,8 @@
     var timer;//ตัวจับเวลา
     var distance; //ระยะทาง
     var endDistance = 1000;
-    var btnEndGame;
+    var btnWinGame;
+    var btnLostGame;
     var bgImg;
     var imgCar;
 
@@ -191,10 +181,14 @@
       //1วิได้ระยทาง 10 เมตร 
       /* ต้องมีเรื่องความเร็วถ้าเร่งความเร็วระยะทางต้องมากขึ้นด้วย */
       distance = parseInt(time * 10);
+<<<<<<< HEAD
+      if (distance >= 30) {
+        winGame();
+=======
       if (distance >= 150) {
         endGame();
+>>>>>>> dbb7dff9f3220c53f86a839810ac052d24ceb5ea
         // window.location.href="./mainLevel.html"
-
       }
       updateDistance();
     }
@@ -206,12 +200,24 @@
     }
 
     // end game 
-    function endGame() {
+    function winGame() {
       game.clear();
       game.stop(); //หยุดเล่น
       game.hide();
       bgImg.style.display = "block";
-      btnEndGame.click();
+      btnWinGame.click();
+
+      // alert(`Your score: ${score}\nYour time: ${time}`);
+
+      // if (confirm("Do you want play more?")) restart();
+    }
+
+    function lostGame() {
+      game.clear();
+      game.stop(); //หยุดเล่น
+      game.hide();
+      bgImg.style.display = "block";
+      btnLostGame.click();
 
       // alert(`Your score: ${score}\nYour time: ${time}`);
 
@@ -220,7 +226,8 @@
 
     // init function
     function init() {
-      btnEndGame = document.getElementById("btn-Endgame");
+      btnWinGame = document.getElementById("btn-winGame");
+      btnLostGame = document.getElementById("btn-lostGame");
       bgImg = document.getElementById("imgBg");
       //game 
       game = new Scene();
@@ -241,7 +248,8 @@
       timer = new Timer();  // ตัวเวลาปัจจุบัน
 
       //ซ่อนปุ่ม submit
-      document.getElementById("btn-Endgame").style.display = "none";
+      btnWinGame.style.display = "none";
+      btnLostGame.style.display = "none";
 
 
       game.start();
@@ -272,11 +280,11 @@
 
       if (cars_Obstacle.collidesWith(car_self)) {
         // cars_Obstacle.reset();
-        endGame();
+        lostGame();
       }
       if (car_obstacle2.collidesWith(car_self)) {
         // cars_Obstacle2.reset();
-        endGame();
+        lostGame();
       }
 
 
@@ -293,24 +301,62 @@
   <div>
     <div id="confirm">
       <div class="message"></div>
-      <button class="yes">NEXT LEVEL</button>
-      <button class="no">MENU</button>
+      <button class="next_level">NEXT LEVEL</button>
+      <button class="restarted">Restart</button>
+      <button class="menu">MENU</button>
     </div>
-    <button id="btn-Endgame" onclick='functionConfirm("YOU WIN!!!", function yes()
-      {
+  </div>
 
+  <button id="btn-winGame" onclick='functionConfirm("YOU WIN!!!", function yes()
+      {
                  window.location.href="./mainLevel.html"
 
       }, function no()
       {
          alert("no")
       });'></button>
+
+  <button id="btn-lostGame" onclick='functionConfirm2("GAME OVER!!!", function yes()
+       {
+
+                  // window.location.href="./mainLevel.html"
+ 
+       }, function no()
+       {
+          // alert("no")
+       });'></button>
   </div>
+
 
   <img src="../img/bg.jpg" id="imgBg" width="800px" height="600px" style="margin-left:10px; margin-top:11px">
 
 
+  <script>
+    function functionConfirm(msg, myYes, myNo) {
+      var confirmBox = $("#confirm");
+      confirmBox.find(".restarted").hide();
+      confirmBox.find(".message").text(msg);
+      confirmBox.find(".next_level,.menu").unbind().click(function () {
+        confirmBox.hide();
+      });
+      confirmBox.find(".next_level").click(myYes);
+      confirmBox.find(".menu").click(myNo);
+      confirmBox.show();
+    }
 
+    function functionConfirm2(msg, myYes, myNo) {
+      var confirmBox = $("#confirm");
+      confirmBox.find(".next_level").hide();
+      confirmBox.find(".message").text(msg);
+      confirmBox.find(".restarted,.menu").unbind().click(function () {
+        confirmBox.hide();
+      });
+      confirmBox.find(".restarted").click(myYes);
+      confirmBox.find(".menu").click(myNo);
+      confirmBox.show();
+    }
+
+  </script>
 
 </body>
 
