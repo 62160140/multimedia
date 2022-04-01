@@ -90,7 +90,7 @@
 
         }
         else if (keysDown[K_DOWN]) {
-          
+
         }
         else if (keysDown[K_LEFT]) {
           this.setSpeed(ROAD_SPEED);
@@ -182,7 +182,7 @@
 
       //1วิได้ระยทาง 10 เมตร 
       /* ต้องมีเรื่องความเร็วถ้าเร่งความเร็วระยะทางต้องมากขึ้นด้วย */
-      distance = parseInt(time * 10*ROAD_SPEED);
+      distance = parseInt(time * 10 * ROAD_SPEED);
       if (distance >= endDistance) {
         winGame();
         // window.location.href="./mainLevel.html"
@@ -199,11 +199,11 @@
     // end game 
     function winGame() {
       localStorage.level2 = true;
-      
+
       game.clear();
       game.stop(); //หยุดเล่น
       game.hide();
-      
+
       bgImg.style.display = "block";
       btnWinGame.click();
 
@@ -211,13 +211,13 @@
 
       // if (confirm("Do you want play more?")) restart();
     }
-    
+
     function lostGame() {
-      
+
       game.clear();
       game.stop(); //หยุดเล่น
       game.hide();
-      
+
       bgImg.style.display = "block";
       btnLostGame.click();
       // alert(`Your score: ${score}\nYour time: ${time}`);
@@ -232,8 +232,9 @@
       bgImg = document.getElementById("imgBg");
       //game 
       game = new Scene();
-      dejavu = new Sound("Dejavu.mp3");
-      carcollision = new Sound("car-collision.mp3");
+      dejavu = new Audio("Dejavu.mp3");
+
+      carcollision = new Audio("car-collision.mp3");
       //background
       background = new Road();
       bgImg.style.display = "none";
@@ -253,16 +254,17 @@
       btnWinGame.style.display = "none";
       btnLostGame.style.display = "none";
 
-      
+
       game.start();
-      
-      
+
+
     } //end init 
-    
+
 
     //update function
     function update() {
       dejavu.play();
+
       game.clear();
 
       //handle
@@ -271,28 +273,32 @@
       car_self.checkKeys();
       car_self.checkGravity();
       background.checkKeys();
-      
-      
 
-      
+
+
+
       //update
       background.update();
       car_self.update();
       cars_Obstacle.update();
       car_obstacle2.update();
-      
+
     }//end update
 
 
     function checkCollisions() {
 
-      if (cars_Obstacle.collidesWith(car_self)) { 
+      if (cars_Obstacle.collidesWith(car_self)) {
+        dejavu.pause()
+        // car_col
+
         carcollision.play()
         // cars_Obstacle.reset();
         lostGame();
       }
-      if (car_obstacle2.collidesWith(car_self)) { 
-        carcollision.play()  
+      if (car_obstacle2.collidesWith(car_self)) {
+        dejavu.pause()
+        carcollision.play()
         // cars_Obstacle2.reset();
         lostGame();
       }
