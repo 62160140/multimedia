@@ -252,7 +252,7 @@
 
     // init function
     function init() {
-      dejavu = new Sound("Dejavu.mp3");
+      
       
       btnWinGame = document.getElementById("btn-winGame");
       btnLostGame = document.getElementById("btn-lostGame");
@@ -263,7 +263,8 @@
       //background
       background = new Road();
       bgImg.style.display = "none";
-      carcollision = new Audio("car-collision.mp3");
+      dejavu = new Audio("../sound/Dejavu.mp3");
+      carcollision = new Audio("../sound/car-collision.mp3");
       
       //car_self
       car_self = new CarSelf();
@@ -287,16 +288,15 @@
 
     //update function
     function update() {
-      dejavu.play();
+      
       game.clear();
-
+      dejavu.play();
       //handle
       car_self.checkKeys();
       car_self.checkGravity();
       background.checkKeys();
       checkDistance();
       checkCollisions();
-
 
       //update
       background.update();
@@ -323,6 +323,7 @@
       }
 
       if(car_obstacle3.collidesWith(car_self)){
+        dejavu.pause();
         carcollision.play()
         lostGame();
       }
