@@ -28,7 +28,8 @@
     var btnLostGame;
     var bgImg;
     var imgCar;
-
+    var carcollision;
+    var dejavu;
     //ถนน
     function Road() {
       //background
@@ -279,19 +280,20 @@
 
     // init function
     function init() {
+      
       btnWinGame = document.getElementById("btn-winGame");
       btnLostGame = document.getElementById("btn-lostGame");
       bgImg = document.getElementById("imgBg");
       //game 
       game = new Scene();
-
+      dejavu = new Sound("Dejavu.mp3");
       //background
       background = new Road();
       bgImg.style.display = "none";
 
       //car_self
       car_self = new CarSelf();
-
+      carcollision = new Sound("car-collision.mp3");
       //cars_obstacle
       //! ทำให้มีหลายคันด้วย : สตางค์
       cars_Obstacle = new Car_obstacle();
@@ -314,7 +316,7 @@
     //update function
     function update() {
       game.clear();
-
+      dejavu.play();
       //handle
       car_self.checkKeys();
       car_self.checkGravity();
@@ -337,19 +339,23 @@
     function checkCollisions() {
 
       if (cars_Obstacle.collidesWith(car_self)) {
+        carcollision.play()
         // cars_Obstacle.reset();
         lostGame();
       }
       if (car_obstacle2.collidesWith(car_self)) {
+        carcollision.play()
         // cars_Obstacle2.reset();
         lostGame();
       }
 
       if (car_obstacle3.collidesWith(car_self)) {
+        carcollision.play()
         lostGame();
       }
 
       if (car_obstacle4.collidesWith(car_self)) {
+        carcollision.play()
         lostGame();
       }
 

@@ -28,6 +28,8 @@
     var btnLostGame;
     var bgImg;
     var imgCar;
+    var carcollision;
+    var dejavu;
 
     //ถนน
     function Road() {
@@ -88,7 +90,7 @@
 
         }
         else if (keysDown[K_DOWN]) {
-
+          
         }
         else if (keysDown[K_LEFT]) {
           this.setSpeed(ROAD_SPEED);
@@ -197,9 +199,11 @@
     // end game 
     function winGame() {
       localStorage.level2 = true;
+      
       game.clear();
       game.stop(); //หยุดเล่น
       game.hide();
+      
       bgImg.style.display = "block";
       btnWinGame.click();
 
@@ -207,27 +211,29 @@
 
       // if (confirm("Do you want play more?")) restart();
     }
-
+    
     function lostGame() {
+      
       game.clear();
       game.stop(); //หยุดเล่น
       game.hide();
+      
       bgImg.style.display = "block";
       btnLostGame.click();
-
       // alert(`Your score: ${score}\nYour time: ${time}`);
-
       // if (confirm("Do you want play more?")) restart();
     }
 
     // init function
     function init() {
+
       btnWinGame = document.getElementById("btn-winGame");
       btnLostGame = document.getElementById("btn-lostGame");
       bgImg = document.getElementById("imgBg");
       //game 
       game = new Scene();
-
+      dejavu = new Sound("Dejavu.mp3");
+      carcollision = new Sound("car-collision.mp3");
       //background
       background = new Road();
       bgImg.style.display = "none";
@@ -247,38 +253,46 @@
       btnWinGame.style.display = "none";
       btnLostGame.style.display = "none";
 
-
+      
       game.start();
+      
+      
     } //end init 
-
+    
 
     //update function
     function update() {
+      dejavu.play();
       game.clear();
 
       //handle
+      checkDistance();
+      checkCollisions();
       car_self.checkKeys();
       car_self.checkGravity();
       background.checkKeys();
-      checkDistance();
-      checkCollisions();
+      
+      
 
-
+      
       //update
       background.update();
       car_self.update();
       cars_Obstacle.update();
       car_obstacle2.update();
+      
     }//end update
 
 
     function checkCollisions() {
 
-      if (cars_Obstacle.collidesWith(car_self)) {
+      if (cars_Obstacle.collidesWith(car_self)) { 
+        carcollision.play()
         // cars_Obstacle.reset();
         lostGame();
       }
-      if (car_obstacle2.collidesWith(car_self)) {
+      if (car_obstacle2.collidesWith(car_self)) { 
+        carcollision.play()  
         // cars_Obstacle2.reset();
         lostGame();
       }
