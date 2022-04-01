@@ -226,7 +226,7 @@
     // end game 
     function winGame() {
       localStorage.level2 = true;
-
+      dejavu.pause();
       game.clear();
       game.stop(); //หยุดเล่น
       game.hide();
@@ -263,8 +263,8 @@
       //background
       background = new Road();
       bgImg.style.display = "none";
-      carcollision = new Sound("car-collision.mp3");
-      dejavu = new Sound("Dejavu.mp3")
+      carcollision = new Audio("car-collision.mp3");
+      dejavu = new Audio("Dejavu.mp3")
       //car_self
       car_self = new CarSelf();
 
@@ -310,11 +310,13 @@
     function checkCollisions() {
 
       if (cars_Obstacle.collidesWith(car_self)) {
+        dejavu.pause();
         carcollision.play()
         // cars_Obstacle.reset();
         lostGame();
       }
       if (car_obstacle2.collidesWith(car_self)) {
+        dejavu.pause();
         carcollision.play()
         // cars_Obstacle2.reset();
         lostGame();

@@ -253,6 +253,7 @@
 
     // end game 
     function winGame() {
+      dejavu.pause();
       game.clear();
       game.stop(); //หยุดเล่น
       game.hide();
@@ -286,14 +287,14 @@
       bgImg = document.getElementById("imgBg");
       //game 
       game = new Scene();
-      dejavu = new Sound("Dejavu.mp3");
+      dejavu = new Audio("Dejavu.mp3");
       //background
       background = new Road();
       bgImg.style.display = "none";
 
       //car_self
       car_self = new CarSelf();
-      carcollision = new Sound("car-collision.mp3");
+      carcollision = new Audio("car-collision.mp3");
       //cars_obstacle
       //! ทำให้มีหลายคันด้วย : สตางค์
       cars_Obstacle = new Car_obstacle();
@@ -339,11 +340,13 @@
     function checkCollisions() {
 
       if (cars_Obstacle.collidesWith(car_self)) {
+        dejavu.pause();
         carcollision.play()
         // cars_Obstacle.reset();
         lostGame();
       }
       if (car_obstacle2.collidesWith(car_self)) {
+        dejavu.pause();
         carcollision.play()
         // cars_Obstacle2.reset();
         lostGame();
