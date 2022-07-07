@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Station 1</title>
-  <script type="text/javascript" src="../simpleGame.js"></script>
+  <script type="text/javascript" src="/simpleGame.js"></script>
   <!-- ------------------- script game ------------------- -->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
@@ -23,17 +23,18 @@
     var time;
     var timer;//ตัวจับเวลา
     var distance; //ระยะทาง
-    var endDistance = 3000;
+    var endDistance = 2000;
     var btnWinGame;
     var btnLostGame;
     var bgImg;
     var imgCar;
     var carcollision;
     var dejavu;
+
     //ถนน
     function Road() {
       //background
-      tRoad = new Sprite(game, "../img/bg.jpg", 800, 1440);
+      tRoad = new Sprite(game, "/img/bg.jpg", 800, 1440);
       tRoad.setSpeed(0, 0);
       //ตึง background ไว้
       tRoad.setDX(0);
@@ -66,16 +67,16 @@
     //รถเราเอง
     function CarSelf() {
       if (localStorage.getItem('carNumber') == 0) {
-        imgCar = "../img/car.png";
+        imgCar = "/img/car.png";
       }
       else if (localStorage.getItem('carNumber') == 1) {
-        imgCar = "../img/carorange.png";
+        imgCar = "/img/carorange.png";
       }
       else if (localStorage.getItem('carNumber') == 2) {
-        imgCar = "../img/carpink.png";
+        imgCar = "/img/carpink.png";
       }
       else if (localStorage.getItem('carNumber') == 3) {
-        imgCar = "../img/carpolice.png";
+        imgCar = "/img/carpolice.png";
       }
       tCar = new Sprite(game, imgCar, 75, 120);
       tCar.setPosition(350, 530);
@@ -121,8 +122,8 @@
     //รถอุปสรรค
     function Car_obstacle() {
       const arrPosition = [45, 144, 243, 349.5, 448.5, 556.5, 655.5, 750];
-      const arr = [0, 1]
-      tCar = new Sprite(game, "../img/car_obstacle_red.png", 75, 120)
+      const arr = [0, 2, 4]
+      tCar = new Sprite(game, "/img/car_obstacle_red.png", 75, 120)
       // สร้างใหม่
       tCar.reset = function () {
         //setDX setDY ทำให้ Object Move มาจากด้านบน
@@ -131,7 +132,7 @@
         this.setDX(0);
         // newX = เซฟใส่ตรงนี้ 
 
-        number = Math.floor(Math.random() * 2);
+        number = Math.floor(Math.random() * 3);
         newX = arr[number]
 
         /* ตัวอย่าง */
@@ -149,8 +150,8 @@
     }
     function Car_obstacle2() {
       const arrPosition = [45, 144, 243, 349.5, 448.5, 556.5, 655.5, 750];
-      const arr = [2, 3]
-      tCar = new Sprite(game, "../img/car_obstacle_pink.png", 75, 120)
+      const arr = [1, 5, 7]
+      tCar = new Sprite(game, "/img/car_obstacle_pink.png", 75, 120)
       // สร้างใหม่
       tCar.reset = function () {
         //setDX setDY ทำให้ Object Move มาจากด้านบน
@@ -159,7 +160,7 @@
         this.setDX(0);
         // newX = เซฟใส่ตรงนี้ 
 
-        number = Math.floor(Math.random() * 2);
+        number = Math.floor(Math.random() * 3);
         newX = arr[number]
         /* ตัวอย่าง */
         this.setPosition(arrPosition[newX], 50);
@@ -176,8 +177,8 @@
     }
     function Car_obstacle3() {
       const arrPosition = [45, 144, 243, 349.5, 448.5, 556.5, 655.5, 750];
-      const arr = [4, 5]
-      tCar = new Sprite(game, "../img/car_obstacle_red.png", 75, 120)
+      const arr = [3, 6]
+      tCar = new Sprite(game, "/img/car_obstacle_red.png", 75, 120)
       // สร้างใหม่
       tCar.reset = function () {
         //setDX setDY ทำให้ Object Move มาจากด้านบน
@@ -201,35 +202,6 @@
       tCar.reset();
       return tCar;
     }
-    function Car_obstacle4() {
-      const arrPosition = [45, 144, 243, 349.5, 448.5, 556.5, 655.5, 750];
-      const arr = [6, 7]
-      tCar = new Sprite(game, "../img/car_obstacle_red.png", 75, 120)
-      // สร้างใหม่
-      tCar.reset = function () {
-        //setDX setDY ทำให้ Object Move มาจากด้านบน
-        // ความเร็วเท่ากับ
-        this.setDY(ROAD_SPEED + 3);
-        this.setDX(0);
-        // newX = เซฟใส่ตรงนี้ 
-
-        number = Math.floor(Math.random() * 2);
-        newX = arr[number]
-        /* ตัวอย่าง */
-        this.setPosition(arrPosition[newX], 50);
-      }
-      //ตกแมพ
-      tCar.checkBounds = function () {
-        if (this.y > game.height) {
-          this.reset();
-        }
-      }
-      // เมือ่เกิด object เกิด ทำให้มีตำแหน่ง
-      tCar.reset();
-      return tCar;
-    }
-
-
 
     //checkDistance()
     function checkDistance() {
@@ -253,12 +225,11 @@
 
     // end game 
     function winGame() {
+      localStorage.level2 = true;
       dejavu.pause();
       game.clear();
       game.stop(); //หยุดเล่น
       game.hide();
-      localStorage.level3 = true;
-
       bgImg.style.display = "block";
       btnWinGame.click();
 
@@ -282,26 +253,27 @@
     // init function
     function init() {
       
+      
       btnWinGame = document.getElementById("btn-winGame");
       btnLostGame = document.getElementById("btn-lostGame");
       bgImg = document.getElementById("imgBg");
       //game 
       game = new Scene();
-      dejavu = new Audio("../sound/Dejavu.mp3");
+
       //background
       background = new Road();
       bgImg.style.display = "none";
-
+      dejavu = new Audio("/sound/Dejavu.mp3");
+      carcollision = new Audio("/sound/car-collision.mp3");
+      
       //car_self
       car_self = new CarSelf();
-      carcollision = new Audio("../sound/car-collision.mp3");
+
       //cars_obstacle
       //! ทำให้มีหลายคันด้วย : สตางค์
       cars_Obstacle = new Car_obstacle();
       car_obstacle2 = new Car_obstacle2();
       car_obstacle3 = new Car_obstacle3();
-      car_obstacle4 = new Car_obstacle4();
-
       //time
       timer = new Timer();  // ตัวเวลาปัจจุบัน
 
@@ -316,6 +288,7 @@
 
     //update function
     function update() {
+      
       game.clear();
       dejavu.play();
       //handle
@@ -325,15 +298,12 @@
       checkDistance();
       checkCollisions();
 
-
       //update
       background.update();
       car_self.update();
       cars_Obstacle.update();
       car_obstacle2.update();
       car_obstacle3.update();
-      car_obstacle4.update();
-
     }//end update
 
 
@@ -352,13 +322,7 @@
         lostGame();
       }
 
-      if (car_obstacle3.collidesWith(car_self)) {
-        dejavu.pause();
-        carcollision.play()
-        lostGame();
-      }
-
-      if (car_obstacle4.collidesWith(car_self)) {
+      if(car_obstacle3.collidesWith(car_self)){
         dejavu.pause();
         carcollision.play()
         lostGame();
@@ -385,40 +349,38 @@
   </div>
 
   <button id="btn-winGame" onclick='functionConfirm("YOU WIN!!!", function yes()
-      {           
-
-                 window.location.href="./mainLevel.html"
-      } );'></button>
+      {
+        window.location.href="./station_3.html"
+      }, function no()
+      {
+        window.location.href="./mainLevel.html"
+      });'></button>
 
   <button id="btn-lostGame" onclick='functionConfirm2("GAME OVER!!!", function yes()
        {
 
-                  window.location.href="./station_3.html"
+                  window.location.href="./station_2.html"
  
        }, function no()
        {
         window.location.href="./mainLevel.html"
-
-   
        });'></button>
   </div>
 
 
-  <img src="../img/bg.jpg" id="imgBg" width="800px" height="600px" style="margin-left:10px; margin-top:11px">
+  <img src="/img/bg.jpg" id="imgBg" width="800px" height="600px" style="margin-left:10px; margin-top:11px">
 
 
   <script>
-
     function functionConfirm(msg, myYes, myNo) {
       var confirmBox = $("#confirm");
       confirmBox.find(".restarted").hide();
-      confirmBox.find(".next_level").hide();
       confirmBox.find(".message").text(msg);
       confirmBox.find(".next_level,.menu").unbind().click(function () {
         confirmBox.hide();
       });
       confirmBox.find(".next_level").click(myYes);
-      confirmBox.find(".menu").click(myYes);
+      confirmBox.find(".menu").click(myNo);
       confirmBox.show();
     }
 
